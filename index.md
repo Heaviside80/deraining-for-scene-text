@@ -30,7 +30,7 @@ All results are shown for qualitative comparison only.
    =============================== */
 
 .ba-wrap{
-  max-width: 980px;
+  max-width: 540px;
   margin: 24px auto 40px;
 }
 
