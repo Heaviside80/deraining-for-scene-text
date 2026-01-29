@@ -3,31 +3,30 @@ layout: default
 title: Image Deraining for Scene Text
 ---
 
-## Qualitative Results
+## Qualitative Visualization
 
-This page provides qualitative visualization of an image deraining approach tailored for scene text recognition scenarios.
-
-The goal of this visualization is to support qualitative evaluation under rainy conditions.  
-No quantitative metrics or implementation details are included.
+This page presents qualitative visualization results of an image deraining approach designed for scene text recognition under rainy conditions.  
+All results are shown for qualitative comparison only.
 
 ---
 
-## 🖼️ 实验结果展示 (Results Preview)
+## 🖼️ Results Preview
 
 <p align="center">
-  <img src="https://github.com/Heaviside80/deraining-for-scene-text/raw/main/assets/rain_t1.png" width="45%" alt="Input Rainy Image">
-  <img src="https://github.com/Heaviside80/deraining-for-scene-text/raw/main/assets/derain_t1.png" width="45%" alt="Derained Result">
+  <img src="https://github.com/Heaviside80/deraining-for-scene-text/raw/main/assets/rain_t1.png" width="45%" alt="Rainy Image">
+  <img src="https://github.com/Heaviside80/deraining-for-scene-text/raw/main/assets/derain_t1.png" width="45%" alt="De-rained Result">
 </p>
 
 ---
 
-## 🚀 交互式去雨效果对比 (Interactive Slider)
+## 🚀 Interactive Before / After Slider
 
 <style>
 /* ===============================
-   Before / After Slider (Auto-fit)
-   - No cropping (contain)
-   - Container height follows image
+   Before / After Slider (Final)
+   - frame size follows image
+   - no cropping
+   - minimal blank space
    =============================== */
 
 .ba-wrap{
@@ -41,16 +40,23 @@ No quantitative metrics or implementation details are included.
   margin: 0 0 10px;
 }
 
+/* outer container: no border here */
 .ba{
   position: relative;
   width: 100%;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  overflow: hidden;
-  background: #000; /* keep clean when aspect differs */
 }
 
-/* BEFORE image: in normal flow, determines container height */
+/* inner frame: border matches image size */
+.ba .frame{
+  position: relative;
+  width: 100%;
+  border: 1.5px dashed #bbb;   /* 灰色虚线框 */
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+/* BEFORE image: determines frame height */
 .ba img.before{
   position: relative;
   width: 100%;
@@ -60,20 +66,20 @@ No quantitative metrics or implementation details are included.
   user-select: none;
 }
 
-/* AFTER image: overlay, does not affect layout */
+/* AFTER image: overlay for slider */
 .ba img.after{
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;           /* no cropping */
-  clip-path: inset(0 0 0 50%);   /* initial 50% */
+  object-fit: contain;
+  clip-path: inset(0 0 0 50%);
   user-select: none;
   pointer-events: none;
 }
 
-/* Slider (invisible but draggable) */
+/* Slider */
 .ba input[type="range"]{
   position: absolute;
   inset: 0;
@@ -140,14 +146,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const divider = ba.querySelector(".divider");
     const knob    = ba.querySelector(".knob");
 
-    const update = (v) => {
+    const update = v => {
       after.style.clipPath = `inset(0 0 0 ${v}%)`;
       divider.style.left = v + "%";
       knob.style.left = v + "%";
     };
 
     update(slider.value);
-    slider.addEventListener("input", (e) => update(e.target.value));
+    slider.addEventListener("input", e => update(e.target.value));
   });
 });
 </script>
@@ -156,21 +162,23 @@ document.addEventListener("DOMContentLoaded", () => {
   <div class="ba-title">Example 1</div>
 
   <div class="ba">
-    <!-- BEFORE (Rainy) - determines height -->
-    <img class="before"
-         src="https://github.com/Heaviside80/deraining-for-scene-text/raw/main/assets/rain_t1.png"
-         alt="Rainy image">
+    <div class="frame">
+      <!-- BEFORE -->
+      <img class="before"
+           src="https://github.com/Heaviside80/deraining-for-scene-text/raw/main/assets/rain_t1.png"
+           alt="Rainy image">
 
-    <!-- AFTER (De-rained) - overlay -->
-    <img class="after"
-         src="https://github.com/Heaviside80/deraining-for-scene-text/raw/main/assets/derain_t1.png"
-         alt="De-rained image">
+      <!-- AFTER -->
+      <img class="after"
+           src="https://github.com/Heaviside80/deraining-for-scene-text/raw/main/assets/derain_t1.png"
+           alt="De-rained image">
 
-    <div class="label before">Rainy</div>
-    <div class="label after">De-rained</div>
+      <div class="label before">Rainy</div>
+      <div class="label after">De-rained</div>
 
-    <div class="divider"></div>
-    <div class="knob">↔</div>
-    <input type="range" min="0" max="100" value="50" aria-label="Before/After slider">
+      <div class="divider"></div>
+      <div class="knob">↔</div>
+      <input type="range" min="0" max="100" value="50" aria-label="Before/After slider">
+    </div>
   </div>
 </div>
