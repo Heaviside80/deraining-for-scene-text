@@ -45,15 +45,19 @@ All results are shown for qualitative comparison only (images may be resized for
   border: 1px solid #ddd;
   background: #000;
 }
+.ba{
+  background: #000;
+}
 .ba img{
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* 不裁剪 */
   user-select: none;
   pointer-events: none;
 }
+
 .ba .after{
   clip-path: inset(0 0 0 50%);
 }
