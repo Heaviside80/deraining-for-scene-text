@@ -2,3 +2,4 @@
 
 ### Some images of TextRain Dataset
 ![image](https://github.com/Heaviside80/deraining-for-scene-text/assets/derain_t1.png)
+### We will publish our code and dataset after publishing the paper.
